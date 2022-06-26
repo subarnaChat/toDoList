@@ -2,6 +2,8 @@ const express=require("express");
 const bodyParser=require("body-parser");
 const mongoose=require("mongoose");
 const _=require("lodash");
+require('dotenv').config();
+//dotenv.config({ path: './config.env' });
 
 const app=express();
 app.set('view engine', 'ejs');
@@ -11,7 +13,10 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 
 //connecting to database
-mongoose.connect("mongodb+srv://admin-subarna:test123@cluster0.biqjoca.mongodb.net/todolistDB");
+const password = process.env.DATABASE_PASSWORD;
+const user=process.env.DATABASE_USER;
+//console.log(password+user);
+mongoose.connect("mongodb+srv://"+user+":"+password+"@cluster0.biqjoca.mongodb.net/todolistDB");
 
 //creating schema
 const itemsSchema={
